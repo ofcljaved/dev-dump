@@ -14,7 +14,10 @@ export function ClipReveal() {
           "h-full w-full grid place-items-center text-[clamp(26px,10vw,120px)] uppercase font-black bg-[#fff1eb] text-[#3d065f] animate-reveal",
         )}
       >
-        <h1>Clip Reveal</h1>
+        <h1 className="grid place-items-center leading-[95%]">
+          <span className="text-[clamp(36px,15vw,158px)]">Clip</span>
+          Reveal
+        </h1>
       </div>
     </>
   )
