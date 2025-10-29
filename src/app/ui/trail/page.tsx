@@ -8,13 +8,16 @@ interface PlusT {
   x: number;
   y: number;
   size: number;
+  opacity: number;
 }
 const SIZE = 20;
+const MIN_OPACITY = 0.3;
+const MAX_OPACITY = 0.8;
 
 export default function TrailPage() {
   const cRef = useRef<HTMLCanvasElement>(null);
 
-  const drawPlus = useCallback(({ ctx, x, y, size }: PlusT) => {
+  const drawPlus = useCallback(({ ctx, x, y, size, opacity }: PlusT) => {
     ctx.save();// ALWAYS SAVE THE CONTEXT
     ctx.translate(x, y);
     ctx.beginPath();
@@ -22,7 +25,7 @@ export default function TrailPage() {
     ctx.lineTo(size, 0);
     ctx.moveTo(0, -size);
     ctx.lineTo(0, size);
-    ctx.strokeStyle = "#333";
+    ctx.strokeStyle = `rgba(51, 51, 51, ${opacity})`;
     ctx.lineWidth = 7.5;
     ctx.stroke();
     ctx.restore();// ALWAYS RESTORE THE CONTEXT
@@ -58,8 +61,11 @@ export default function TrailPage() {
       for (let j = 0; j < rows; j++) {
         const x = spacing * i + offsetX;
         const y = spacing * j + offsetY;
+        const seed = Math.sin(i * 12.9898 + j * 78.233) * 43758.5453;
+        const rand = seed - Math.floor(seed);
+        const opacity = rand * (MAX_OPACITY - MIN_OPACITY) + MIN_OPACITY;
 
-        drawPlus({ ctx, x, y, size: SIZE });
+        drawPlus({ ctx, x, y, size: SIZE, opacity });
       }
     }
 
