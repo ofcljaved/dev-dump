@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { PLUS_CONSTANTS, lerp, seededRandom, seed } from "@/app/ui/trail/utils";
 import type { DrawPlus, Plus } from "@/app/ui/trail/types";
 
-export function usePlusField() {
+export function usePlusField(cols: number, rows: number) {
   const cRef = useRef<HTMLCanvasElement>(null);
   const pluses = useRef<Plus[]>([]);
   const mouse = useRef({ x: 0, y: 0 });
@@ -26,8 +26,8 @@ export function usePlusField() {
     const { SIZE, SPACING_MULTIPLIER, MIN_OPACITY, MAX_OPACITY, MAX_GRADE, MIN_LIGHT, MAX_LIGHT } = PLUS_CONSTANTS;
     const plusList: Plus[] = [];
     const spacing = SIZE * SPACING_MULTIPLIER;
-    const cols = Math.floor(width / spacing);
-    const rows = Math.floor(height / spacing);
+    //const cols = Math.floor(width / spacing);
+    //const rows = Math.floor(height / spacing);
     const gridWidth = (cols - 1) * spacing;
     const gridHeight = (rows - 1) * spacing;
     const offsetX = (width - gridWidth) / 2;
@@ -56,7 +56,7 @@ export function usePlusField() {
       }
     }
     return plusList;
-  }, []);
+  }, [cols, rows]);
 
   const setupCanvas = useCallback(() => {
     const cnvs = cRef.current;
@@ -119,7 +119,7 @@ export function usePlusField() {
       drawPlus({ ctx, ...plus });
     }
     return isDirty;
-  }, []);
+  }, [drawPlus]);
 
   useEffect(() => {
     const cnvs = cRef.current;
@@ -200,7 +200,7 @@ export function usePlusField() {
       controller.abort();
       stopLoop();
     }
-  }, [setupCanvas, animate]);
+  }, [setupCanvas, animate, cols, rows]);
 
   return {
     canvasRef: cRef,

@@ -2,16 +2,25 @@
 
 import { usePlusField } from "@/app/ui/trail/hooks/use-plus-field";
 import { cn } from "@/lib/utils";
+import { useTweaks } from "@/hooks/use-tweaks";
+import { PLUS_CONSTANTS } from "@/app/ui/trail/utils";
 
-interface PlusFieldProps extends React.ComponentProps<"canvas"> { }
+const { SIZE, SPACING_MULTIPLIER } = PLUS_CONSTANTS;
+export function PlusField({ className, ...props }: React.ComponentProps<"canvas">) {
+  const { cols, rows } = useTweaks('config', {
+    cols: { value: 20, min: 5, max: 40 },
+    rows: { value: 10, min: 3, max: 20 },
+  });
 
-export function PlusField({ className, ...props }: PlusFieldProps) {
-  const { canvasRef } = usePlusField();
-
+  const { canvasRef } = usePlusField(cols, rows);
   return (
     <canvas
       ref={canvasRef}
-      className={cn("bg-transparent w-full max-w-xl aspect-video", className)}
+      style={{
+        width: `${(cols * SIZE * SPACING_MULTIPLIER) + (SIZE * SPACING_MULTIPLIER)}px`,
+        height: `${(rows * SIZE * SPACING_MULTIPLIER) + (SIZE * SPACING_MULTIPLIER)}px`,
+      }}
+      className={cn("bg-transparent w-full", className)}
       {...props}
     />
   )
