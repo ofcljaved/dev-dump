@@ -8,8 +8,8 @@ import { PLUS_CONSTANTS } from "@/app/ui/trail/utils";
 const { SIZE, SPACING_MULTIPLIER } = PLUS_CONSTANTS;
 export function PlusField({ className, ...props }: React.ComponentProps<"canvas">) {
   const { cols, rows } = useTweaks('config', {
-    cols: { value: 20, min: 5, max: 40 },
-    rows: { value: 10, min: 3, max: 20 },
+    cols: { value: 7, min: 5, max: 40 },
+    rows: { value: 5, min: 3, max: 20 },
   });
 
   const { canvasRef } = usePlusField(cols, rows);

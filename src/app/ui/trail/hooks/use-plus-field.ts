@@ -172,7 +172,7 @@ export function usePlusField(cols: number, rows: number) {
     };
 
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handlePointerMove = (e: MouseEvent) => {
       const rect = cnvs.getBoundingClientRect();
       mouse.current.x = e.clientX - rect.left;
       mouse.current.y = e.clientY - rect.top;
@@ -180,15 +180,15 @@ export function usePlusField(cols: number, rows: number) {
       startLoop();
     };
 
-    const handleMouseLeave = () => {
+    const handlePointerLeave = () => {
       mouse.current.x = Infinity;
       mouse.current.y = Infinity;
 
       startLoop();
     };
 
-    cnvs.addEventListener("mousemove", handleMouseMove, { signal });
-    cnvs.addEventListener("mouseleave", handleMouseLeave, { signal });
+    cnvs.addEventListener("pointermove", handlePointerMove, { signal });
+    cnvs.addEventListener("pointerleave", handlePointerLeave, { signal });
 
     window.addEventListener("resize", () => {
       setupCanvas();
